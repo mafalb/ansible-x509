@@ -1,0 +1,28 @@
+[ req ]
+default_bits            = 2048
+default_md              = sha256
+utf8                    = yes
+string_mask             = utf8only
+prompt                  = no
+distinguished_name      = server_dn             # DN template
+req_extensions          = server_reqext         # Desired extensions
+
+[ server_dn ]
+CN={{ x509_cn }}
+O={{ x509_organization }}
+L={{ x509_locality }}
+ST={{ x509_province }}
+C={{ x509_country }}
+
+[ server_reqext ]
+basicConstraints = CA:FALSE
+keyUsage                = critical,digitalSignature,keyEncipherment
+extendedKeyUsage        = serverAuth,clientAuth
+subjectKeyIdentifier    = hash
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = {{ x509_cn }}
+{% for san in x509_sans %}
+DNS.{{ loop.index + 1 }} = {{ san }}
+{% endfor %}

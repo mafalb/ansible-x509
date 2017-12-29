@@ -1,0 +1,8 @@
+---
+
+x509_path_to_key: /etc/pki/tls/private
+x509_path_to_csr: /etc/pki/tls/certs
+x509_path_to_cert: /etc/pki/tls/certs
+x509_cn: "{{ ansible_fqdn }}"
+x509_days: 365
+x509_group: root

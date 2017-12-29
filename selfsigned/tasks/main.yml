@@ -1,0 +1,36 @@
+---
+
+- name: create csr config for {{ x509_cn }}
+  template:
+    src: "{{ item }}"
+    dest: /etc/pki/tls/certs/{{ x509_cn }}.cnf
+  with_first_found:
+    - templates/{{ csr_config }}
+    - csr.cnf
+
+- name: check key for {{ x509_cn }}
+  command: openssl rsa -in {{ x509_path_to_key }}/{{ x509_cn }}.key -noout
+  check_mode: no
+  changed_when: no
+  failed_when: no
+  register: key
+
+- block:
+  - name: create file for key
+    file:
+      path: "{{ x509_path_to_key }}/{{ x509_cn }}.key"
+      mode: 0440
+      owner: root
+      group: "{{ x509_group }}"
+      state: touch
+
+  - name: create key for {{ x509_cn }}
+    command: openssl genrsa -out {{ x509_path_to_key }}/{{ x509_cn }}.key 2048
+
+  - name: create csr for {{ x509_cn }}
+    command: openssl req -new -utf8 -key {{ x509_path_to_key }}/{{ x509_cn }}.key -out {{ x509_path_to_csr }}/{{ x509_cn }}.csr -config {{ x509_path_to_csr }}/{{ x509_cn }}.cnf
+
+  - name: generate cert
+    command: openssl x509 -out {{ x509_path_to_cert }}/{{ x509_cn }}.cert -days {{ x509_days }} -req -in {{ x509_path_to_csr }}/{{ x509_cn }}.csr -signkey {{ x509_path_to_key }}/{{ x509_cn }}.key
+
+  when: key.rc == 1

@@ -6,3 +6,4 @@ x509_path_to_cert: /etc/pki/tls/certs
 x509_cn: "{{ ansible_fqdn }}"
 x509_days: 365
 x509_group: root
+x509_v3ext_section: server_reqext

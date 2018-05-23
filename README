@@ -1,0 +1,14 @@
+---
+
+---
+
+- hosts: localhost
+  roles:
+    - role: x509/certificate
+      alias: test
+      cert: templates/certificates/bla.example.com.cert
+      key: templates/certificates/bla.example.com.key
+      chain:
+        - templates/certificates/issuer.cert
+      root: templates/certificates/CA.cert
+

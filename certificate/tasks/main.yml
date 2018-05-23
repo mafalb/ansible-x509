@@ -1,0 +1,32 @@
+---
+
+- debug: var=playbook_dir
+
+- name: get the key into a variable
+  command: cat {{ playbook_dir }}/{{ key }}
+  always_run: true
+  register: __key
+
+- debug: var=__key
+
+- name: certificate does exist
+  copy:
+    src: "{{ playbook_dir }}/{{ cert }}"
+    dest: /tmp/{{ alias }}.cert
+
+- name: root certificate does exist
+  copy:
+    src: "{{ playbook_dir }}/{{ root }}"
+    dest: /tmp/{{ alias }}.rootcert
+
+- name: key does exist
+  copy:
+    src: "{{ playbook_dir }}/{{ key }}"
+    dest: /tmp/{{ alias }}.key
+    mode: g-rwx,o-rwx
+
+- name: pem file does exist
+  template:
+    src: pem.j2
+    dest: /tmp/{{ alias }}.pem
+    mode: g-rwx,o-rwx

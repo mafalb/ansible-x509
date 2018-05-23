@@ -1,0 +1,7 @@
+{% include key %}
+{% include cert %}
+{% if chain is defined %}
+{% for cacert in chain %}
+{% include cacert %}
+{% endfor %}
+{% endif %}

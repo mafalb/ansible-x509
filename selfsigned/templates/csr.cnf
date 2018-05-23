@@ -23,6 +23,8 @@ subjectAltName = @alt_names
 
 [ alt_names ]
 DNS.1 = {{ x509_cn }}
+{% if x509_sans is defined %}
 {% for san in x509_sans %}
 DNS.{{ loop.index + 1 }} = {{ san }}
 {% endfor %}
+{% endif %}

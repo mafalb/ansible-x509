@@ -1,13 +1,11 @@
 ---
 
-- debug: var=playbook_dir
-
-- name: get the key into a variable
-  command: cat {{ playbook_dir }}/{{ key }}
-  always_run: true
-  register: __key
-
-- debug: var=__key
+- block:
+    - debug: var=playbook_dir
+    - debug: msg="the key is {{ lookup('file', playbook_dir + '/' + key) }}"
+  tags:
+    - debug
+    - never
 
 - name: certificate does exist
   copy:

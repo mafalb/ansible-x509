@@ -1,7 +1,7 @@
-{% include key %}
-{% include cert %}
+{{ lookup('file', playbook_dir + '/' + key) }}
+{{ lookup('file', playbook_dir + '/' + cert) }}
 {% if chain is defined %}
 {% for cacert in chain %}
-{% include cacert %}
+{{ lookup('file', playbook_dir + '/' + cacert) }}
 {% endfor %}
 {% endif %}

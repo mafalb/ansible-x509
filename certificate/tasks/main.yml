@@ -2,7 +2,6 @@
 
 - block:
     - debug: var=playbook_dir
-    - debug: msg="the key is {{ lookup('file', playbook_dir + '/' + key) }}"
   tags:
     - debug
     - never
@@ -17,11 +16,28 @@
     src: "{{ playbook_dir }}/{{ root }}"
     dest: /tmp/{{ alias }}.rootcert
 
-- name: key does exist
+- name: managed key does exist
+  when: key is defined
   copy:
     src: "{{ playbook_dir }}/{{ key }}"
     dest: /tmp/{{ alias }}.key
     mode: g-rwx,o-rwx
+
+- name: unmanaged key does exist
+  when: key is not defined
+  block:
+    - name: unmanaged key does exist
+      file:
+        path: /tmp/{{ alias }}.key
+        mode: g-rwx,o-rwx
+    - name: read in key
+      command: cat /tmp/{{ alias }}.key
+      check_mode: false
+      register: __key
+    - debug: var=__key
+      tags:
+        - debug
+        - never
 
 - name: pem file does exist
   template:

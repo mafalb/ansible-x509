@@ -1,4 +1,8 @@
+{% if key is defined %}
 {{ lookup('file', playbook_dir + '/' + key) }}
+{% else %}
+{{ __key.stdout }}
+{% endif %}
 {{ lookup('file', playbook_dir + '/' + cert) }}
 {% if chain is defined %}
 {% for cacert in chain %}

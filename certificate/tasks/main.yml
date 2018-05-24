@@ -6,32 +6,38 @@
     - debug
     - never
 
+- name: get OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
 - name: certificate does exist
   copy:
     src: "{{ playbook_dir }}/{{ cert }}"
-    dest: /tmp/{{ alias }}.cert
+    dest: "{{ x509.certdir }}/{{ alias }}.cert"
+    backup: true
 
 - name: root certificate does exist
   copy:
     src: "{{ playbook_dir }}/{{ root }}"
-    dest: /tmp/{{ alias }}.rootcert
+    dest: "{{ x509.certdir }}/{{ alias }}.rootcert"
+    backup: true
 
 - name: managed key does exist
   when: key is defined
   copy:
     src: "{{ playbook_dir }}/{{ key }}"
-    dest: /tmp/{{ alias }}.key
+    dest: "{{ x509.keydir }}/{{ alias }}.key"
     mode: g-rwx,o-rwx
+    backup: true
 
 - name: unmanaged key does exist
   when: key is not defined
   block:
     - name: unmanaged key does exist
       file:
-        path: /tmp/{{ alias }}.key
+        path: "{{ x509.keydir }}/{{ alias }}.key"
         mode: g-rwx,o-rwx
     - name: read in key
-      command: cat /tmp/{{ alias }}.key
+      command: cat "{{ x509.keydir }}/{{ alias }}.key"
       check_mode: false
       register: __key
     - debug: var=__key
@@ -42,5 +48,6 @@
 - name: pem file does exist
   template:
     src: pem.j2
-    dest: /tmp/{{ alias }}.pem
+    dest: "{{ x509.keydir }}/{{ alias }}.pem"
     mode: g-rwx,o-rwx
+    backup: true

@@ -1,0 +1,5 @@
+---
+
+x509:
+  certdir: /etc/pki/tls/certs
+  keydir: /etc/pki/tls/private

@@ -12,3 +12,4 @@
         - templates/certificates/issuer.cert
       root: templates/certificates/CA.cert
 
+alias is used for destination file names

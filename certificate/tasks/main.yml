@@ -22,6 +22,7 @@
     backup: true
 
 - name: managed key for {{ alias }} does exist
+  no_log: true
   when: key is defined
   copy:
     src: "{{ playbook_dir }}/{{ key }}"
@@ -37,15 +38,13 @@
         path: "{{ x509.keydir }}/{{ alias }}.key"
         mode: g-rwx,o-rwx
     - name: read in key
+      no_log: true
       command: cat "{{ x509.keydir }}/{{ alias }}.key"
       check_mode: false
       register: __key
-    - debug: var=__key
-      tags:
-        - debug
-        - never
 
 - name: pem file for {{ alias }} does exist
+  no_log: true
   template:
     src: pem.j2
     dest: "{{ x509.keydir }}/{{ alias }}.pem"

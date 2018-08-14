@@ -18,7 +18,7 @@
 - name: root certificate for {{ alias }} does exist
   copy:
     src: "{{ playbook_dir }}/{{ root }}"
-    dest: "{{ x509.certdir }}/{{ alias }}.rootcert"
+    dest: "{{ x509.certdir }}/{{ alias }}.root.cert"
     backup: true
 
 - name: managed key for {{ alias }} does exist
@@ -48,5 +48,12 @@
   template:
     src: pem.j2
     dest: "{{ x509.keydir }}/{{ alias }}.pem"
+    mode: g-rwx,o-rwx
+    backup: true
+
+- name: chain file for {{ alias }} does exist
+  template:
+    src: chain.j2
+    dest: "{{ x509.certdir }}/{{ alias }}.chain.pem"
     mode: g-rwx,o-rwx
     backup: true

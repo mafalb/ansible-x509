@@ -8,15 +8,13 @@
     - templates/{{ csr_config }}
     - csr.cnf
 
-- block:
+- name: create key for {{ x509_cn }}
+  openssl_privatekey:
+    path: "{{ x509_path_to_key }}/{{ x509_cn }}.key"
+    size: 2048
+    type: RSA
 
-  - name: create key for {{ x509_cn }}
-    openssl_privatekey:
-      path: "{{ x509_path_to_key }}/{{ x509_cn }}.key"
-      size: 2048
-      type: RSA
-
-  - name: create csr for {{ x509_cn }}
-    command: openssl req -new -utf8 -key {{ x509_path_to_key }}/{{ x509_cn }}.key -out {{ x509_path_to_csr }}/{{ x509_cn }}.csr -config {{ x509_path_to_csr }}/{{ x509_cn }}.cnf
-
-  when: key.rc == 1
+- name: create csr for {{ x509_cn }}
+  command: openssl req -new -utf8 -key {{ x509_path_to_key }}/{{ x509_cn }}.key -out {{ x509_path_to_csr }}/{{ x509_cn }}.csr -config {{ x509_path_to_csr }}/{{ x509_cn }}.cnf
+  args:
+    creates: "{{ x509_path_to_csr }}/{{ x509_cn }}.csr"

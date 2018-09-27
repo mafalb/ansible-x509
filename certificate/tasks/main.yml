@@ -30,6 +30,10 @@
     mode: g-rwx,o-rwx
     backup: true
 
+- debug: var=key
+  tags:
+    - never
+    - debug
 - name: unmanaged key for {{ alias }}
   when: key is not defined
   block:

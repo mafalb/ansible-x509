@@ -21,6 +21,11 @@
     dest: "{{ x509.certdir }}/{{ alias }}.root.cert"
     backup: true
 
+- debug: var=key
+  tags:
+    - never
+    - debug
+
 - name: managed key for {{ alias }} does exist
   no_log: true
   when: key is defined
@@ -30,10 +35,6 @@
     mode: g-rwx,o-rwx
     backup: true
 
-- debug: var=key
-  tags:
-    - never
-    - debug
 - name: unmanaged key for {{ alias }}
   when: key is not defined
   block:
@@ -41,6 +42,7 @@
       file:
         path: "{{ x509.keydir }}/{{ alias }}.key"
         mode: g-rwx,o-rwx
+
     - name: read in key
       no_log: true
       command: cat "{{ x509.keydir }}/{{ alias }}.key"

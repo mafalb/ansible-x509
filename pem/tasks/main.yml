@@ -1,0 +1,7 @@
+---
+
+- name: pem does exist
+  template:
+    src: pem.j2
+    dest: "{{ dest }}"
+    backup: true

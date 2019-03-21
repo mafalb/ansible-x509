@@ -1,0 +1,3 @@
+{% for cert in certs %}
+{{ lookup('file', playbook_dir + '/' + cert) }}
+{% endfor %}

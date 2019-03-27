@@ -5,3 +5,4 @@
     src: pem.j2
     dest: "{{ dest }}"
     backup: true
+  notify: check for changed pem

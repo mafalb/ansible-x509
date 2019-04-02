@@ -1,0 +1,56 @@
+---
+
+- name: certificate for {{ alias }} does exist
+  copy:
+    src: "{{ playbook_dir }}/{{ cert }}"
+    dest: "{{ x509.certdir }}/{{ alias }}.cert"
+    backup: true
+
+- name: root certificate for {{ alias }} does exist
+  copy:
+    src: "{{ playbook_dir }}/{{ root }}"
+    dest: "{{ x509.certdir }}/{{ alias }}.root.cert"
+    backup: true
+
+- debug: var=key
+  tags:
+    - never
+    - debug
+
+- name: managed key for {{ alias }} does exist
+  no_log: true
+  when: key is defined
+  copy:
+    src: "{{ playbook_dir }}/{{ key }}"
+    dest: "{{ x509.keydir }}/{{ alias }}.key"
+    mode: g-rwx,o-rwx
+    backup: true
+
+- name: unmanaged key for {{ alias }}
+  when: key is not defined
+  block:
+    - name: unmanaged key for {{ alias }} does exist
+      file:
+        path: "{{ x509.keydir }}/{{ alias }}.key"
+        mode: g-rwx,o-rwx
+
+    - name: read in key
+      no_log: true
+      command: cat "{{ x509.keydir }}/{{ alias }}.key"
+      check_mode: false
+      register: __key
+
+- name: pem file for {{ alias }} does exist
+  no_log: true
+  template:
+    src: pem.j2
+    dest: "{{ x509.keydir }}/{{ alias }}.pem"
+    mode: g-rwx,o-rwx
+    backup: true
+
+- name: chain file for {{ alias }} does exist
+  template:
+    src: chain.j2
+    dest: "{{ x509.certdir }}/{{ alias }}.chain.pem"
+    mode: 0664
+    backup: true

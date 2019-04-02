@@ -1,3 +1,5 @@
 ---
 
 x509:
+  state: "{{ x509_state|default('present') }}"
+

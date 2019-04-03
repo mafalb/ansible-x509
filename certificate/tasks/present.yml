@@ -1,10 +1,17 @@
 ---
 
+- name: assertions
+  assert:
+    that:
+      - chain|type_debug == 'list'
+
 - name: certificate for {{ alias }} does exist
   copy:
     src: "{{ playbook_dir }}/{{ cert }}"
     dest: "{{ x509.certdir }}/{{ alias }}.cert"
+    mode: 00644
     backup: true
+  notify: check for changed cert
 
 - name: root certificate for {{ alias }} does exist
   copy:
@@ -25,6 +32,7 @@
     dest: "{{ x509.keydir }}/{{ alias }}.key"
     mode: g-rwx,o-rwx
     backup: true
+  notify: check for changed key
 
 - name: unmanaged key for {{ alias }}
   when: key is not defined
@@ -33,6 +41,7 @@
       file:
         path: "{{ x509.keydir }}/{{ alias }}.key"
         mode: g-rwx,o-rwx
+      notify: check for changed key
 
     - name: read in key
       no_log: true
@@ -47,6 +56,7 @@
     dest: "{{ x509.keydir }}/{{ alias }}.pem"
     mode: g-rwx,o-rwx
     backup: true
+  notify: check for changed private pem
 
 - name: chain file for {{ alias }} does exist
   template:

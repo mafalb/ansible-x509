@@ -1,0 +1,2 @@
+UserParameter=custom.x509.discovery,/usr/local/bin/x509.discover 2>/dev/null
+UserParameter=custom.x509.checkend[*],/usr/local/bin/x509.checkend $1 $2

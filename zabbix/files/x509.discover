@@ -1,0 +1,42 @@
+#!/bin/bash
+
+FIRST_IN_ARRAY=1
+CERT_DIRECTORY=/etc/pki/tls/certs
+
+echo -e '{'
+echo -e '\t"data": ['
+
+while read FILENAME
+do
+  if test "$FIRST_IN_ARRAY" -eq 1; then
+    FIRST_IN_ARRAY=0
+  else
+    echo -e '\t\t,'
+  fi
+  if test ! -r "$FILENAME" ; then
+    logger "could not read $FILENAME"
+  fi
+  if test -z "$FILENAME" ; then
+    logger "$FILENAME is empty"
+  fi
+  CN=
+  CN=$(openssl x509 -noout -subject -in "$FILENAME"|sed 's/^.*CN=//')
+  CN=${CN%%/*}
+  if test -z "$CN" ; then
+    CN=unknown
+  fi
+  SANs=$(openssl x509 -noout -text -in "$FILENAME"|sed -ne 's/^\( *\)Subject://;/X509v3 Subject Alternative Name/{ N;s/^.*\n//;:a;s/^\( *\)\(.*\), /\1\2\n\1/;ta;p;q; }')
+  echo -e '\t\t{'
+  echo -ne "\t\t\t\"{#FILENAME}\": \"$FILENAME\""
+  if test -n "$CN" ; then
+    echo ","
+    echo -e "\t\t\t\"{#CN}\": \"$CN\""
+#    echo -e "\t\t\t\"{#SANs}\": \"$SANs\""
+  else
+    echo
+  fi
+  echo -e '\t\t}'
+done < <(find "$CERT_DIRECTORY" -name "*.cert" -o -name "*.pem" -o -name "*.crt")
+
+echo -e '\t]'
+echo '}'

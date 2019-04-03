@@ -1,0 +1,17 @@
+# vim: set ft=yaml ts=2 expandtab
+---
+- name: auto discovery script for certificates is present
+  with_items:
+    - x509.discover
+    - x509.checkend
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/bin/{{ item }}
+    mode: 00755
+
+- name: UserParameter is present
+  copy:
+    src: custom.x509
+    dest: /etc/zabbix/zabbix_agentd.d/custom.x509
+  notify: restart zabbix agent
+...

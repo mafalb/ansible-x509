@@ -1,0 +1,15 @@
+#!/bin/bash
+
+FILENAME=$1
+CERTIFICATE_EXPIRY_WARN_THRESHOLD=$2
+
+ENDDATE=$(openssl x509 -noout -checkend $CERTIFICATE_EXPIRY_WARN_THRESHOLD -in $FILENAME -enddate)
+EXPIRES_SOON=$?
+
+ENDDATE=${ENDDATE##notAfter=}
+
+if test $EXPIRES_SOON == 1 ; then
+	echo expires soon on $ENDDATE
+else
+	echo expires on $ENDDATE
+fi

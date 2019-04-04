@@ -12,6 +12,7 @@
 - assert:
     that:
       - x509.state in [ "present", "absent" ]
+      - alias is defined
 
 - name: include_tasks
   include_tasks:

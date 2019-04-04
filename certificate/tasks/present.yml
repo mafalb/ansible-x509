@@ -62,5 +62,5 @@
   template:
     src: chain.j2
     dest: "{{ x509.certdir }}/{{ alias }}.chain.pem"
-    mode: 0664
+    mode: 0644
     backup: true

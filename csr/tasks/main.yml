@@ -1,5 +1,16 @@
 ---
 
+- name: directories for csr does exist
+  file:
+    path: "{{ x509_path_to_csr }}"
+    state: directory
+
+- name: directories for key does exist
+  file:
+    path: "{{ x509_path_to_key }}"
+    state: directory
+    mode: 00700
+
 - name: create csr config for {{ x509_cn }}
   template:
     src: "{{ item }}"

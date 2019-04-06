@@ -50,3 +50,4 @@ TBD
 ## Variables
 
 x509_alias is used for destination file names
+x509_state

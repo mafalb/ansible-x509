@@ -14,7 +14,7 @@ This had generated a CSR and it lives on the control_machine in {{ playbook_dir 
 
 ```
 $ ls -1 files/x509/
-bla.example.com-20130407.csr
+bla.example.com.csr
 ```
 
 Give it to your CA and get a certificate.
@@ -23,7 +23,7 @@ Now copy the certificate and the intermediates and the root certificate into {{ 
 
 ```
 $ ls -1 files/x509/
-bla.example.com-20130407.csr
+bla.example.com.csr
 bla.example.com.cert
 chain_0.cert
 chain_1.cert

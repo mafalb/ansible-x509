@@ -12,8 +12,10 @@ To create an openssl config file, a key, and a csr, you would do that:
 
 This had generated a CSR and it lives on the control_machine in {{ playbook_dir }}
 
+```
 $ ls -1 files/x509/
 bla.example.com-20130407.csr
+```
 
 Give it to your CA and get a certificate.
 

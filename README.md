@@ -6,8 +6,15 @@ To create an openssl config file, a key, and a csr, you would do that:
 ```
 - hosts: localhost
   roles:
-    - role: mafalb.x509/csr
-      x509_alias: bla.example.com
+  - role: mafalb.x509/csr
+    x509_alias: bla.example.com
+    x509:
+      dn:
+        cn: bla.example.com
+        city: Wherever
+        country: XX
+        state: Whereever
+        organization: Whatever
 ```
 
 This had generated a CSR and it lives on the control_machine in {{ playbook_dir }}

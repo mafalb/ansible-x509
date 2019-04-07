@@ -17,20 +17,13 @@ To create an openssl config file, a key, and a csr, you would do that:
         organization: Whatever
 ```
 
-This had generated a CSR and it lives on the control_machine in {{ playbook_dir }}
-
-```
-$ ls -1 files/x509/
-bla.example.com.csr
-```
-
+This had generated a CSR.
 Give it to your CA and get a certificate.
 
 Now copy the certificate and the intermediates and the root certificate into {{ playbook_path }}/files/x509
 
 ```
 $ ls -1 files/x509/
-bla.example.com.csr
 bla.example.com.cert
 chain_0.cert
 chain_1.cert
@@ -54,7 +47,33 @@ The location of the destination files are OS dependent, on RedHat-ish Operating 
 
 TBD
 
+```
+- hosts: localhost
+  roles:
+    - role: mafalb.x509/pem
+      alias: client_ca.pem
+      x509_src:
+        certs:
+          - chain_2.cert
+```
+
+creates a pem file with the ```x509_src.certs``` concatenated
+
 ## Variables
 
 x509_alias is used for destination file names
 x509_state
+
+```
+x509_src:
+  cert: bla.example.com.cert
+  key: bla.example.com.key
+  chain:
+    - chain.cert
+  root: root.cert
+  certs:
+    - cert1.cert
+    - cert2.cert
+```
+
+not all values has to be defined in all circumstances. e.g. if you want a pem file with some certificates you only need ```x509_src.certs```.

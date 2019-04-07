@@ -1,0 +1,7 @@
+---
+- name: key for {{ x509.alias }} is absent
+  file:
+    path: "{{ x509.keydir }}/{{ x509.alias }}.key"
+    state: absent
+    backup: true
+...

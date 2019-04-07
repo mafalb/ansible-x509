@@ -1,0 +1,37 @@
+---
+
+- debug: var=x509
+  tags:
+    - never
+    - debug
+
+- name: assertions
+  assert:
+    that:
+      - x509.dn.cn is defined
+      - x509.dn.organization is defined
+      - x509.dn.country is defined
+      - x509.dn.state is defined
+      - x509.dn.city is defined
+      - x509.group is defined
+      - x509.csr.cnf is defined
+      - x509_alias
+
+- name: key for {{ x509.dn.cn }} does exist
+  openssl_privatekey:
+    path: "{{ x509.keydir }}/{{ x509.alias }}.key"
+    size: 2048
+    type: RSA
+    group: "{{ x509.group }}"
+    mode: 00640
+
+- name: openssl cnf for {{ x509.dn.cn }} does exist (externally provided)
+  template:
+    src: "{{ x509.csr.cnf }}"
+    dest: "{{ x509.certdir }}/{{ x509.alias }}.cnf"
+    backup: true
+
+- name: csr for {{ x509.dn.cn }} does exist
+  command: openssl req -new -utf8 -key {{ x509.keydir }}/{{ x509.alias }}.key -out {{ x509.certdir }}/{{ x509.alias }}.csr -config {{ x509.certdir }}/{{ x509.alias }}.cnf
+  args:
+    creates: "{{ x509.certdir }}/{{ x509.alias }}.csr"

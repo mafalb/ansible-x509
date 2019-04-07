@@ -8,11 +8,11 @@ distinguished_name      = server_dn             # DN template
 req_extensions          = server_reqext         # Desired extensions
 
 [ server_dn ]
-CN={{ x509_cn }}
-O={{ x509_organization }}
-L={{ x509_locality }}
-ST={{ x509_province }}
-C={{ x509_country }}
+CN={{ x509.dn.cn }}
+O={{ x509.dn.organization }}
+L={{ x509.dn.city }}
+ST={{ x509.dn.state }}
+C={{ x509.dn.country }}
 
 [ server_reqext ]
 basicConstraints = CA:FALSE
@@ -22,7 +22,7 @@ subjectKeyIdentifier    = hash
 subjectAltName = @alt_names
 
 [ alt_names ]
-DNS.1 = {{ x509_cn }}
+DNS.1 = {{ x509.dn.cn }}
 {% if x509_sans is defined %}
 {% for san in x509_sans %}
 DNS.{{ loop.index + 1 }} = {{ san }}

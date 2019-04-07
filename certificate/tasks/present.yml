@@ -1,22 +1,43 @@
 ---
 
 - name: assertions
+  when: x509_src.chain is defined
   assert:
     that:
-      - chain|type_debug == 'list'
+      - x509_src.chain|type_debug == 'list'
 
-- name: certificate for {{ alias }} does exist
+- name: assertions
+  assert:
+    that:
+      - x509_src.cert
+
+- name: unmanaged key for {{ x509.alias }}
+  when: key is not defined
+  block:
+    - name: unmanaged key for {{ x509.alias }} does exist
+      file:
+        path: "{{ x509.keydir }}/{{ x509.alias }}.key"
+        mode: g-rwx,o-rwx
+      notify: check for changed key
+
+    - name: read in key
+      no_log: true
+      command: cat "{{ x509.keydir }}/{{ x509.alias }}.key"
+      check_mode: false
+      register: __key
+
+- name: certificate for {{ x509.alias }} does exist
   copy:
-    src: "{{ playbook_dir }}/{{ cert }}"
-    dest: "{{ x509.certdir }}/{{ alias }}.cert"
+    src: "{{ x509.local_cert_store }}/{{ cert }}"
+    dest: "{{ x509.certdir }}/{{ x509.alias }}.cert"
     mode: 00644
     backup: true
   notify: check for changed cert
 
-- name: root certificate for {{ alias }} does exist
+- name: root certificate for {{ x509.alias }} does exist
   copy:
-    src: "{{ playbook_dir }}/{{ root }}"
-    dest: "{{ x509.certdir }}/{{ alias }}.root.cert"
+    src: "{{ x509.local_cert_store }}/{{ root }}"
+    dest: "{{ x509.certdir }}/{{ x509.alias }}.root.cert"
     backup: true
 
 - debug: var=key
@@ -24,43 +45,44 @@
     - never
     - debug
 
-- name: managed key for {{ alias }} does exist
+- name: managed key for {{ x509.alias }} does exist
   no_log: true
   when: key is defined
   copy:
-    src: "{{ playbook_dir }}/{{ key }}"
-    dest: "{{ x509.keydir }}/{{ alias }}.key"
+    src: "{{ x509.local_cert_store }}/{{ key }}"
+    dest: "{{ x509.keydir }}/{{ x509.alias }}.key"
     mode: g-rwx,o-rwx
     backup: true
   notify: check for changed key
 
-- name: unmanaged key for {{ alias }}
+- name: unmanaged key for {{ x509.alias }}
   when: key is not defined
   block:
-    - name: unmanaged key for {{ alias }} does exist
+    - name: unmanaged key for {{ x509.alias }} does exist
       file:
-        path: "{{ x509.keydir }}/{{ alias }}.key"
+        path: "{{ x509.keydir }}/{{ x509.alias }}.key"
         mode: g-rwx,o-rwx
       notify: check for changed key
 
     - name: read in key
       no_log: true
-      command: cat "{{ x509.keydir }}/{{ alias }}.key"
+      command: cat "{{ x509.keydir }}/{{ x509.alias }}.key"
       check_mode: false
       register: __key
 
-- name: pem file for {{ alias }} does exist
+- name: private pem file for {{ x509.alias }} does exist
   no_log: true
   template:
     src: pem.j2
-    dest: "{{ x509.keydir }}/{{ alias }}.pem"
+    dest: "{{ x509.keydir }}/{{ x509.alias }}.pem"
     mode: g-rwx,o-rwx
     backup: true
   notify: check for changed private pem
 
-- name: chain file for {{ alias }} does exist
-  template:
-    src: chain.j2
-    dest: "{{ x509.certdir }}/{{ alias }}.chain.pem"
-    mode: 0644
-    backup: true
+- name: chain file for {{ x509.alias }} does exist
+  include_role:
+    role: mafalb.x509/pem
+  vars:
+    x509_alias: "{{ x509.alias }}"
+    x509_certs: "{{ x509_src.chain }}"
+...

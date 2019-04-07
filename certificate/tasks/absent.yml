@@ -1,31 +1,14 @@
 ---
-- name: certificate for {{ alias }} is absent
+- name: files for {{ x509.alias }} are absent
+  with_items:
+    - "{{ x509.keydir }}/{{ x509.alias }}.key"
+    - "{{ x509.keydir }}/{{ x509.alias }}.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.root.cert"
+    - "{{ x509.certdir }}/{{ x509.alias }}.chain.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cert"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cnf"
+    - "{{ x509.certdir }}/{{ x509.alias }}.csr"
   file:
-    path: "{{ x509.certdir }}/{{ alias }}.cert"
+    path: "{{ item }}"
     state: absent
     backup: true
-
-- name: root certificate for {{ alias }} is absent
-  file:
-    path: "{{ x509.certdir }}/{{ alias }}.root.cert"
-    state: absent
-    backup: true
-
-- name: key for {{ alias }} is absent
-  file:
-    path: "{{ x509.keydir }}/{{ alias }}.key"
-    state: absent
-    backup: true
-
-- name: pem for {{ alias }} is absent
-  file:
-    path: "{{ x509.keydir }}/{{ alias }}.pem"
-    state: absent
-    backup: true
-
-- name: chain file for {{ alias }} is absent
-  file:
-    path: "{{ x509.certdir }}/{{ alias }}.chain.pem"
-    state: absent
-    backup: true
-...

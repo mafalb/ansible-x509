@@ -1,0 +1,10 @@
+---
+- name: csr for {{ x509.alias }} is absent
+  with_items:
+    - "{{ x509.certdir }}/{{ x509.alias }}.cnf"
+    - "{{ x509.certdir }}/{{ x509.alias }}.csr"
+  file:
+    path: "{{ item }}"
+    state: absent
+    backup: true
+...

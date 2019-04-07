@@ -1,0 +1,7 @@
+---
+x509:
+  csr:
+    cnf: "{{ x509_csr_cnf|default('csr.cnf.j2') }}"
+    dest_host: localhost
+    dest_path: "{{ playbook_dir }}/x509/"
+

@@ -1,0 +1,7 @@
+---
+- name: csr for {{ x509.alias }} is absent
+  file:
+    path: "{{ x509.certdir }}/{{ x509.alias }}.csr"
+    state: absent
+    backup: true
+...

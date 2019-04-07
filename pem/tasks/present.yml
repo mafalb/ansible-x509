@@ -1,0 +1,8 @@
+---
+
+- name: pem does exist
+  template:
+    src: pem.j2
+    dest: "{{ x509.alias }}.pem"
+    backup: true
+  notify: check for changed pem

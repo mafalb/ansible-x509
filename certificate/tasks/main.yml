@@ -1,18 +1,9 @@
 ---
 
-- block:
-    - debug: var=playbook_dir
-  tags:
-    - debug
-    - never
-
-- name: get OS specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
-
 - assert:
     that:
       - x509.state in [ "present", "absent" ]
-      - alias is defined
+      - x509.alias is defined
 
 - name: include_tasks
   include_tasks:

@@ -13,7 +13,7 @@ To create an openssl config file, a key, and a csr, you would do that:
         cn: bla.example.com
         city: Wherever
         country: XX
-        state: Whereever
+        state: Wherever
         organization: Whatever
 ```
 

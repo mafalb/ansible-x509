@@ -84,5 +84,6 @@
     role: mafalb.x509/pem
   vars:
     x509_alias: "{{ x509.alias }}"
-    x509_certs: "{{ x509_src.chain }}"
+    x509_src:
+      certs: "{{ x509_src.chain }}"
 ...

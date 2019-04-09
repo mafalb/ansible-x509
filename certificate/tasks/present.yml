@@ -18,7 +18,7 @@
       file:
         path: "{{ x509.keydir }}/{{ x509.alias }}.key"
         mode: g-rwx,o-rwx
-      notify: check for changed key
+      notify: notifiying for changed key
 
     - name: read in key
       no_log: true
@@ -32,7 +32,7 @@
     dest: "{{ x509.certdir }}/{{ x509.alias }}.cert"
     mode: 00644
     backup: true
-  notify: check for changed cert
+  notify: notifiying for changed cert
 
 - name: root certificate for {{ x509.alias }} does exist
   copy:
@@ -53,7 +53,7 @@
     dest: "{{ x509.keydir }}/{{ x509.alias }}.key"
     mode: g-rwx,o-rwx
     backup: true
-  notify: check for changed key
+  notify: notifiying for changed key
 
 - name: unmanaged key for {{ x509.alias }}
   when: key is not defined
@@ -62,7 +62,7 @@
       file:
         path: "{{ x509.keydir }}/{{ x509.alias }}.key"
         mode: g-rwx,o-rwx
-      notify: check for changed key
+      notify: notifiying for changed key
 
     - name: read in key
       no_log: true
@@ -77,7 +77,7 @@
     dest: "{{ x509.keydir }}/{{ x509.alias }}.pem"
     mode: g-rwx,o-rwx
     backup: true
-  notify: check for changed private pem
+  notify: notifiying for changed private pem
 
 - name: chain file for {{ x509.alias }} does exist
   include_role:

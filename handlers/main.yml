@@ -1,0 +1,21 @@
+---
+- name: notify for changed pem
+  check_mode: false
+  command: "true"
+
+- name: notify for changed private pem
+  check_mode: false
+  command: "true"
+
+- name: notify for changed cert
+  check_mode: false
+  command: "true"
+
+- name: notify for changed key
+  check_mode: false
+  command: "true"
+
+- name: notify for changed chain
+  check_mode: false
+  command: "true"
+...

@@ -1,5 +1,0 @@
----
-- name: check for changed pem
-  check_mode: false
-  command: "true"
-...

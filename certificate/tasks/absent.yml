@@ -2,6 +2,65 @@
 - name: files for {{ x509.alias }} are absent
   with_items:
     - "{{ x509.keydir }}/{{ x509.alias }}.key"
+    - "{{ x509.certdir }}/{{ x509.alias }}.chain.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cert"
+  file:
+    path: "{{ item }}"
+    state: absent
+    backup: true
+  notify: notify for changed cert
+
+- name: files for {{ x509.alias }} are absent
+  with_items:
+    - "{{ x509.keydir }}/{{ x509.alias }}.pem"
+  file:
+    path: "{{ item }}"
+    state: absent
+    backup: true
+  notify: notify for changed private pem
+
+- name: files for {{ x509.alias }} are absent
+  with_items:
+    - "{{ x509.keydir }}/{{ x509.alias }}.key"
+    - "{{ x509.keydir }}/{{ x509.alias }}.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.root.cert"
+    - "{{ x509.certdir }}/{{ x509.alias }}.chain.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cert"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cnf"
+    - "{{ x509.certdir }}/{{ x509.alias }}.csr"
+  file:
+    path: "{{ item }}"
+    state: absent
+    backup: true
+- name: files for {{ x509.alias }} are absent
+  with_items:
+    - "{{ x509.keydir }}/{{ x509.alias }}.key"
+    - "{{ x509.keydir }}/{{ x509.alias }}.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.root.cert"
+    - "{{ x509.certdir }}/{{ x509.alias }}.chain.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cert"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cnf"
+    - "{{ x509.certdir }}/{{ x509.alias }}.csr"
+  file:
+    path: "{{ item }}"
+    state: absent
+    backup: true
+- name: files for {{ x509.alias }} are absent
+  with_items:
+    - "{{ x509.keydir }}/{{ x509.alias }}.key"
+    - "{{ x509.keydir }}/{{ x509.alias }}.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.root.cert"
+    - "{{ x509.certdir }}/{{ x509.alias }}.chain.pem"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cert"
+    - "{{ x509.certdir }}/{{ x509.alias }}.cnf"
+    - "{{ x509.certdir }}/{{ x509.alias }}.csr"
+  file:
+    path: "{{ item }}"
+    state: absent
+    backup: true
+- name: files for {{ x509.alias }} are absent
+  with_items:
+    - "{{ x509.keydir }}/{{ x509.alias }}.key"
     - "{{ x509.keydir }}/{{ x509.alias }}.pem"
     - "{{ x509.certdir }}/{{ x509.alias }}.root.cert"
     - "{{ x509.certdir }}/{{ x509.alias }}.chain.pem"

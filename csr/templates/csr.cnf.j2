@@ -17,7 +17,7 @@ C={{ x509.dn.country }}
 [ server_reqext ]
 basicConstraints = CA:FALSE
 keyUsage                = critical,digitalSignature,keyEncipherment
-extendedKeyUsage        = serverAuth,clientAuth
+extendedKeyUsage        = {{ x509.csr.key_usage|join(',') }}
 subjectKeyIdentifier    = hash
 subjectAltName = @alt_names
 

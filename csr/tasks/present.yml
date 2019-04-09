@@ -15,7 +15,7 @@
       - x509.dn.city is defined
       - x509.group is defined
       - x509.csr.cnf is defined
-      - x509_alias
+      - x509.csr.key_usage|type_debug == 'list'
 
 - name: key for {{ x509.dn.cn }} does exist
   openssl_privatekey:

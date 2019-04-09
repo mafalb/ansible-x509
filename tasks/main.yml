@@ -12,9 +12,4 @@
 
 - name: get OS specific variables
   include_vars: "{{ ansible_os_family }}.yml"
-
-- name: local directory for certificates is present
-  file:
-    path: "{{ x509.local_cert_store }}"
-    state: directory
 ...

@@ -2,6 +2,7 @@
 x509:
   csr:
     cnf: "{{ x509_csr_cnf|default('csr.cnf.j2') }}"
+    key_usage: "{{ x509_key_usage|default(['serverAuth']) }}"
     dest_host: localhost
     dest_path: "{{ playbook_dir }}/x509/"
 

@@ -1,0 +1,21 @@
+---
+
+- name: assertions
+  assert:
+    that:
+    - x509_src is defined
+    - x509_src.certs|type_debug == 'list'
+
+- name: ca certificates does exist
+  package:
+    name: ca-certificates
+    state: present
+
+- name: cert does exist
+  with_items: "{{ x509_src.certs }}"
+  copy:
+    src: "{{ x509.local_cert_store }}/{{ item }}"
+    dest: "{{ x509.catrustdir }}/{{ x509.alias }}.pem"
+  notify:
+    - build ca trust store
+    - enable ca trust store

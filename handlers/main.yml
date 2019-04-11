@@ -18,4 +18,10 @@
 - name: notify for changed chain
   check_mode: false
   command: "true"
+
+- name: build ca trust store
+  command: update-ca-trust
+
+- name: enable ca trust store
+  command: update-ca-trust enable
 ...

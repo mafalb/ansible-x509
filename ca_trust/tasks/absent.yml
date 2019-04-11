@@ -1,0 +1,10 @@
+---
+- name: csr for {{ x509.alias }} is absent
+  with_items: x509_src.certs
+  file:
+    path: "{{ x509.catrustdir }}/{{ x509.alias }}.pem"
+    state: absent
+  notify:
+  - build ca trust store
+  - enable ca trust store
+...

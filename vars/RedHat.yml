@@ -3,3 +3,4 @@
 x509:
   certdir: /etc/pki/tls/certs
   keydir: /etc/pki/tls/private
+  catrustdir: /etc/pki/ca-trust/source/anchors

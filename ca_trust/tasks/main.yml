@@ -1,0 +1,15 @@
+---
+- debug: var=x509
+  tags:
+    - never
+    - debug
+
+- name: assertions
+  assert:
+    that:
+      - x509_alias is defined
+
+- name: include_tasks
+  include_tasks:
+    file: "{{ x509.state }}.yml"
+...

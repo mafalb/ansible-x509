@@ -54,7 +54,7 @@
   template:
     src: pem.j2
     dest: "{{ x509.keydir }}/{{ alias }}.pem"
-    mode: g-rwx,o-rwx
+    mode: 00600
     backup: true
   notify: check for changed private pem
 

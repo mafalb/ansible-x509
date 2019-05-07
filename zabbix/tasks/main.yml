@@ -14,4 +14,10 @@
     src: custom.x509
     dest: /etc/zabbix/zabbix_agentd.d/custom.x509
   notify: restart zabbix agent
+
+- name: coverage script is present
+  copy:
+    src: certificate-check-coverage.sh
+    dest: /usr/local/sbin/
+    mode: 00755
 ...

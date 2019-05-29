@@ -3,29 +3,24 @@
   file:
     path: "{{ x509.certdir }}/{{ alias }}.cert"
     state: absent
-    backup: true
 
 - name: root certificate for {{ alias }} is absent
   file:
     path: "{{ x509.certdir }}/{{ alias }}.root.cert"
     state: absent
-    backup: true
 
 - name: key for {{ alias }} is absent
   file:
     path: "{{ x509.keydir }}/{{ alias }}.key"
     state: absent
-    backup: true
 
 - name: pem for {{ alias }} is absent
   file:
     path: "{{ x509.keydir }}/{{ alias }}.pem"
     state: absent
-    backup: true
 
 - name: chain file for {{ alias }} is absent
   file:
     path: "{{ x509.certdir }}/{{ alias }}.chain.pem"
     state: absent
-    backup: true
 ...

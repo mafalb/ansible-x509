@@ -7,7 +7,6 @@
   file:
     path: "{{ item }}"
     state: absent
-    backup: true
   notify: notify for changed cert
 
 - name: files for {{ x509.alias }} are absent
@@ -16,7 +15,6 @@
   file:
     path: "{{ item }}"
     state: absent
-    backup: true
   notify: notify for changed private pem
 
 - name: files for {{ x509.alias }} are absent
@@ -31,7 +29,7 @@
   file:
     path: "{{ item }}"
     state: absent
-    backup: true
+
 - name: files for {{ x509.alias }} are absent
   with_items:
     - "{{ x509.keydir }}/{{ x509.alias }}.key"
@@ -44,7 +42,7 @@
   file:
     path: "{{ item }}"
     state: absent
-    backup: true
+
 - name: files for {{ x509.alias }} are absent
   with_items:
     - "{{ x509.keydir }}/{{ x509.alias }}.key"
@@ -57,7 +55,7 @@
   file:
     path: "{{ item }}"
     state: absent
-    backup: true
+
 - name: files for {{ x509.alias }} are absent
   with_items:
     - "{{ x509.keydir }}/{{ x509.alias }}.key"
@@ -70,4 +68,5 @@
   file:
     path: "{{ item }}"
     state: absent
-    backup: true
+
+...

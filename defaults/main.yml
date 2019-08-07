@@ -7,4 +7,4 @@ x509:
   days: 825
   group: root
   state: "{{ x509_state|default('present') }}"
-  local_cert_store: "{{ playbook_dir + '/files/x509/' }}"
+  local_cert_store: "{{ x509_local_store|default(playbook_dir + '/files/x509/') }}"

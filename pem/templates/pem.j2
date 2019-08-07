@@ -1,3 +1,5 @@
+{% if x509_src.certs is defined %}
 {% for cert in x509_src.certs %}
 {{ lookup('file', x509.local_cert_store + cert) }}
 {% endfor %}
+{% endif %}

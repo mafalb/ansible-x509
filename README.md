@@ -1,3 +1,16 @@
+## Subroles
+
+[```x509/csr```](csr/README.md) creates a Certificate Signing Request
+
+[```x509/certificate```](certificate/README.md) installs a certificate
+
+[```x509/key```](key/README.md) creates an key
+
+[```x509/pem```](pem/README.md)
+
+[```x509/ca_trust```](ca_trust/README.md) adds a CA certificate to the system store
+
+[```x509/selfsigned```](selfsigned/README.md) creates a selfsigned certificate
 
 ## Basic Usage
 

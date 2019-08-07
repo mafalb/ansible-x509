@@ -1,5 +1,7 @@
+# vim: set ft=yaml ts=2 expandtab:
 ---
 x509:
+  dn: "{{ x509_dn }}"
   csr:
     cnf: "{{ x509_csr_cnf|default('csr.cnf.j2') }}"
     key_usage: "{{ x509_key_usage|default(['serverAuth']) }}"

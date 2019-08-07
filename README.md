@@ -6,15 +6,14 @@ To create an openssl config file, a key, and a csr, you would do that:
 ```
 - hosts: localhost
   roles:
-  - role: mafalb.x509/csr
+  - role: x509/csr
     x509_alias: bla.example.com
-    x509:
-      dn:
-        cn: bla.example.com
-        city: Wherever
-        country: XX
-        state: Wherever
-        organization: Whatever
+    x509_dn:
+      cn: bla.example.com
+      city: Wherever
+      country: XX
+      state: Wherever
+      organization: Whatever
 ```
 
 This had generated a CSR.
@@ -61,8 +60,9 @@ creates a pem file with the ```x509_src.certs``` concatenated
 
 ## Variables
 
-x509_alias is used for destination file names
-x509_state
+```x509_alias``` is used for destination file names
+
+```x509_state``` present/absent
 
 ```
 x509_src:
@@ -75,5 +75,7 @@ x509_src:
     - cert1.cert
     - cert2.cert
 ```
+
+is used for source file names.
 
 not all values has to be defined in all circumstances. e.g. if you want a pem file with some certificates you only need ```x509_src.certs```.

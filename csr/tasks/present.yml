@@ -33,17 +33,17 @@
     group: "{{ x509_group }}"
     mode: 00640
 
-- name: openssl cnf for {{ x509.dn.cn }} does exist (externally provided)
+- name: openssl cnf for {{ x509_dn_cn }} does exist (externally provided)
   template:
     src: "{{ x509_csr_cnf }}"
     dest: "{{ x509.certdir }}/{{ x509_alias }}.cnf"
     backup: true
 
-- name: force new csr for {{ x509.dn.cn }}
+- name: force new csr for {{ x509_dn_cn }}
   when: x509_csr_force is defined
   command: openssl req -new -utf8 -key {{ x509.keydir }}/{{ x509_alias }}.key -out {{ x509.certdir }}/{{ x509_alias }}.csr -config {{ x509.certdir }}/{{ x509_alias }}.cnf
 
-- name: csr for {{ x509.dn.cn }} does exist
+- name: csr for {{ x509_dn_cn }} does exist
   command: openssl req -new -utf8 -key {{ x509.keydir }}/{{ x509_alias }}.key -out {{ x509.certdir }}/{{ x509_alias }}.csr -config {{ x509.certdir }}/{{ x509_alias }}.cnf
   args:
     creates: "{{ x509.certdir }}/{{ x509_alias }}.csr"

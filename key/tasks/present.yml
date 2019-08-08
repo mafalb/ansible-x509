@@ -8,11 +8,11 @@
 - name: assertions
   assert:
     that:
-      - x509.alias
+      - x509_alias
 
-- name: key for {{ x509.dn.cn }} does exist
+- name: key for {{ x509_dn_cn }} does exist
   openssl_privatekey:
-    path: "{{ x509.keydir }}/{{ x509.alias }}.key"
+    path: "{{ x509.keydir }}/{{ x509_alias }}.key"
     size: 2048
     type: RSA
     group: "{{ x509.group }}"

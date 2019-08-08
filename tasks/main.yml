@@ -1,3 +1,4 @@
+# vim: set ft=yaml ts=2 expandtab:
 ---
 
 - debug: var=x509
@@ -8,8 +9,9 @@
 - name: assertions
   assert:
     that:
-      - ansible_os_family in x509.supported_os_families
+      - ansible_os_family in x509_supported_os_families
 
 - name: get OS specific variables
   include_vars: "{{ ansible_os_family }}.yml"
+
 ...

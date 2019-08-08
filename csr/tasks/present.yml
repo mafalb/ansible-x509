@@ -8,14 +8,14 @@
 - name: assertions
   assert:
     that:
-      - x509.dn.cn is defined
-      - x509.dn.organization is defined
-      - x509.dn.country is defined
-      - x509.dn.state is defined
-      - x509.dn.city is defined
-      - x509.group is defined
-      - x509.csr.cnf is defined
-      - x509.csr.key_usage|type_debug == 'list'
+      - x509_dn_cn is defined
+      - x509_dn_o is defined
+      - x509_dn_c is defined
+      - x509_dn_st is defined
+      - x509_dn_c is defined
+      - x509_group is defined
+      - x509_csr_cnf is defined
+      - x509_key_usage|type_debug == 'list'
 
 - name: check x509_sans
   when: x509_sans is defined
@@ -23,27 +23,27 @@
   assert:
     that:
       - x509_sans|type_debug == 'list'
-      - x509.dn.cn != item
+      - x509_dn_cn != item
 
-- name: key for {{ x509.dn.cn }} does exist
+- name: key for {{ x509_dn_cn }} does exist
   openssl_privatekey:
-    path: "{{ x509.keydir }}/{{ x509.alias }}.key"
+    path: "{{ x509.keydir }}/{{ x509_alias }}.key"
     size: 2048
     type: RSA
-    group: "{{ x509.group }}"
+    group: "{{ x509_group }}"
     mode: 00640
 
 - name: openssl cnf for {{ x509.dn.cn }} does exist (externally provided)
   template:
-    src: "{{ x509.csr.cnf }}"
-    dest: "{{ x509.certdir }}/{{ x509.alias }}.cnf"
+    src: "{{ x509_csr_cnf }}"
+    dest: "{{ x509.certdir }}/{{ x509_alias }}.cnf"
     backup: true
 
 - name: force new csr for {{ x509.dn.cn }}
   when: x509_csr_force is defined
-  command: openssl req -new -utf8 -key {{ x509.keydir }}/{{ x509.alias }}.key -out {{ x509.certdir }}/{{ x509.alias }}.csr -config {{ x509.certdir }}/{{ x509.alias }}.cnf
+  command: openssl req -new -utf8 -key {{ x509.keydir }}/{{ x509_alias }}.key -out {{ x509.certdir }}/{{ x509_alias }}.csr -config {{ x509.certdir }}/{{ x509_alias }}.cnf
 
 - name: csr for {{ x509.dn.cn }} does exist
-  command: openssl req -new -utf8 -key {{ x509.keydir }}/{{ x509.alias }}.key -out {{ x509.certdir }}/{{ x509.alias }}.csr -config {{ x509.certdir }}/{{ x509.alias }}.cnf
+  command: openssl req -new -utf8 -key {{ x509.keydir }}/{{ x509_alias }}.key -out {{ x509.certdir }}/{{ x509_alias }}.csr -config {{ x509.certdir }}/{{ x509_alias }}.cnf
   args:
-    creates: "{{ x509.certdir }}/{{ x509.alias }}.csr"
+    creates: "{{ x509.certdir }}/{{ x509_alias }}.csr"

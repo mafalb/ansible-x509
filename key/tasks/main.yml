@@ -11,5 +11,5 @@
 
 - name: include_tasks
   include_tasks:
-    file: "{{ x509.state }}.yml"
+    file: "{{ x509_state }}.yml"
 ...

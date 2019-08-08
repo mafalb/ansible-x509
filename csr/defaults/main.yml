@@ -1,10 +1,10 @@
 # vim: set ft=yaml ts=2 expandtab:
 ---
-x509:
-  dn: "{{ x509_dn }}"
-  csr:
-    cnf: "{{ x509_csr_cnf|default('csr.cnf.j2') }}"
-    key_usage: "{{ x509_key_usage|default(['serverAuth']) }}"
-    dest_host: localhost
-    dest_path: "{{ playbook_dir }}/x509/"
 
+x509_csr_cnf: 'csr.cnf.j2'
+x509_key_usage:
+  - serverAuth
+x509_csr_dest_host: localhost
+x509_csr_dest_path: "{{ playbook_dir }}/x509/"
+
+...

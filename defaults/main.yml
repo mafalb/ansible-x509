@@ -1,7 +1,7 @@
 ---
 
 x509_state: present
-x509_local_cert_store: "{{ playbook_dir + '/files/x509/') }}"
+x509_local_cert_store: "{{ playbook_dir + '/files/x509/' }}"
 x509_supported_os_families:
  - RedHat
 x509_days: 825

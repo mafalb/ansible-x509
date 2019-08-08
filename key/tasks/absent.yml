@@ -1,7 +1,7 @@
 ---
-- name: key for {{ x509.alias }} is absent
+- name: key for {{ x509_alias }} is absent
   file:
-    path: "{{ x509.keydir }}/{{ x509.alias }}.key"
+    path: "{{ x509.keydir }}/{{ x509_alias }}.key"
     state: absent
     backup: true
 ...

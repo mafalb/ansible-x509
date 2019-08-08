@@ -1,7 +1,6 @@
 ---
 
-x509:
-  supported_os_families:
-    - RedHat
-  state: "{{ x509_state|default('present') }}"
+x509_supported_os_families:
+  - RedHat
+x509_state: present
 

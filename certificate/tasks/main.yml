@@ -2,10 +2,10 @@
 
 - assert:
     that:
-      - x509.state in [ "present", "absent" ]
-      - x509.alias is defined
+      - x509_state in [ "present", "absent" ]
+      - x509_alias is defined
 
 - name: include_tasks
   include_tasks:
-    file: "{{ x509.state }}.yml"
+    file: "{{ x509_state }}.yml"
 ...

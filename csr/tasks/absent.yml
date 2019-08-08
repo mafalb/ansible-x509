@@ -1,8 +1,8 @@
 ---
-- name: csr for {{ x509.alias }} is absent
+- name: csr for {{ x509_alias }} is absent
   with_items:
-    - "{{ x509.certdir }}/{{ x509.alias }}.cnf"
-    - "{{ x509.certdir }}/{{ x509.alias }}.csr"
+    - "{{ x509.certdir }}/{{ x509_alias }}.cnf"
+    - "{{ x509.certdir }}/{{ x509_alias }}.csr"
   file:
     path: "{{ item }}"
     state: absent

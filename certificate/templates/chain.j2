@@ -1,5 +1,5 @@
 {% if x509_src.chain is defined %}
 {% for cacert in x509_src.chain %}
-{{ lookup('file', x509.local_cert_store + '/' + cacert) }}
+{{ lookup('file', x509_local_cert_store + '/' + cacert) }}
 {% endfor %}
 {% endif %}

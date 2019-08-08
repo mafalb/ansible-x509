@@ -14,8 +14,8 @@
 - name: cert does exist
   with_items: "{{ x509_src.certs }}"
   copy:
-    src: "{{ x509.local_cert_store }}/{{ item }}"
-    dest: "{{ x509.catrustdir }}/{{ x509.alias }}.pem"
+    src: "{{ x509_local_cert_store }}/{{ item }}"
+    dest: "{{ x509.catrustdir }}/{{ x509_alias }}.pem"
   notify:
     - build ca trust store
     - enable ca trust store

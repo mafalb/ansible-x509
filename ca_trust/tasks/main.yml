@@ -1,3 +1,4 @@
+# vim: set ft=yaml ts=2 expandtab:
 ---
 - debug: var=x509
   tags:
@@ -11,5 +12,5 @@
 
 - name: include_tasks
   include_tasks:
-    file: "{{ x509.state }}.yml"
+    file: "{{ x509_state }}.yml"
 ...

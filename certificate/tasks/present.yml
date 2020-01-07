@@ -35,7 +35,9 @@
   notify: check for changed key
 
 - name: unmanaged key for {{ alias }}
-  when: key is not defined
+  when:
+  - key is not defined
+  - no_key is not defined
   block:
     - name: unmanaged key for {{ alias }} does exist
       file:
@@ -50,6 +52,8 @@
       register: __key
 
 - name: pem file for {{ alias }} does exist
+  when:
+  - no_key is not defined
   no_log: true
   template:
     src: pem.j2
